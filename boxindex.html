@@ -310,17 +310,16 @@ body {
 .orientation-toast.show { bottom: 30px; }
 
 /* ==========================================================================
-   🚨 FULL MOBILE & TABLET RESPONSIVE MEDIA QUERIES (FIXED BALANCED INTERFACE)
+   🚨 FULL MOBILE & TABLET RESPONSIVE MEDIA QUERIES (FULLY FLOATING FIX)
    ========================================================================== */
 @media (max-width: 950px) {
-    /* --- Grid View Layout अलाइनमेंट फिक्स --- */
+    /* --- Grid View Layout Fixes --- */
     .bda-filters-grid {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
     }
     
-    /* 🟩 सर्च इनपुट को मोबाइल पर ऑर्डर-4 देकर सबसे नीचे व्हाट्सएप बटन के बाद भेजा */
     .bda-filters-grid .bda-search-green-zone {
         order: 4;
         border-top: 1px dashed #edf2f7;
@@ -328,78 +327,84 @@ body {
         width: 100%;
     }
     .bda-filters-grid .bda-filter-column:nth-child(1) { order: 1; }
-.bda-filters-grid .bda-filter-column:nth-child(2) { order: 2; }
-.bda-action-panel {
-flex-direction: row;
-flex-wrap: wrap;
-gap: 0.75rem;
-order: 3; /* बटन्स अब फिल्टर्स के ठीक नीचे आएंगे */
-border-top: none;
-padding-top: 0;
+    .bda-filters-grid .bda-filter-column:nth-child(2) { order: 2; }
+
+    .bda-action-panel {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        order: 3;
+        border-top: none;
+        padding-top: 0;
+    }
+    .bda-matrix-block-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* --- List View Responsive Swipe Engine --- */
+    .bda-pharma-dashboard-layout {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 10px !important;
+    }
+    .categories-list {
+        flex-direction: row !important;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 8px;
+    }
+    .company-checkbox-wrapper {
+        flex-direction: row !important;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 16px;
+        border-top: 1px solid var(--pharma-border-color);
+        padding-top: 14px;
+    }
+    
+    /* 📱 मोबाइल वर्टिकल स्क्रीन: लॉकिंग हटाकर वापस स्वाइप चालू किया */
+    .bda-pharma-table-viewport {
+        overflow-x: auto !important;
+        display: block !important;
+        width: 100% !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    .bda-pharma-data-table {
+        width: auto !important;
+        min-width: 850px !important; /* मोबाइल पर टेबल को सिकुड़ने से रोकेगा */
+        table-layout: auto !important; /* फिक्स्ड लॉक हटाया */
+    }
+    .bda-pharma-data-table th, 
+    .bda-pharma-data-table td {
+        white-space: nowrap !important; /* टेक्स्ट एक लाइन में रहेगा */
+        padding: 12px 16px !important;
+    }
+    .bda-export-action-bar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
 }
-.bda-matrix-block-container {
-grid-template-columns: 1fr !important;
-}
-/* --- List View Layout अलाइनमेंट फिक्स --- */
-.bda-pharma-dashboard-layout {
-display: block !important;
-width: 100% !important;
-padding: 0 10px !important;
-}
-.categories-list {
-flex-direction: row !important;
-overflow-x: auto;
-white-space: nowrap;
-padding-bottom: 8px;
-}
-.company-checkbox-wrapper {
-flex-direction: row !important;
-overflow-x: auto;
-white-space: nowrap;
-gap: 16px;
-border-top: 1px solid var(--pharma-border-color);
-padding-top: 14px;
-}
-/* 🚨 मोबाइल वर्टिकल स्क्रीन पर हॉरिजॉन्टल स्वाइप एक्टिव रखने और श्रिंकिंग रोकने का फिक्स /
-.bda-pharma-table-viewport {
-overflow-x: auto !important;
--webkit-overflow-scrolling: touch;
-display: block !important;
-}
-.bda-pharma-data-table {
-min-width: 850px !important; / मोबाइल पर चौड़ाई लॉक रहेगी */
-}
-.bda-pharma-data-table th, .bda-pharma-data-table td {
-white-space: nowrap !important;
-padding: 12px 14px !important;
-}
-.bda-export-action-bar {
-flex-direction: column;
-gap: 1rem;
-align-items: flex-start;
-}
+
 /* ==========================================================================
-🖥️ HORIZONTAL / LANDSCAPE MODE FIX (NO LEFT-RIGHT SCROLL)
-========================================================================== */
+   🖥️ HORIZONTAL / LANDSCAPE MODE FIX (AUTO-FIT FOR ALL 6 COLUMNS)
+   ========================================================================== */
 @media (min-width: 951px) {
-.bda-pharma-table-viewport {
-overflow-x: hidden !important; /* बड़ी स्क्रीन पर स्क्रॉल बार को पूरी तरह छुपाएं */
-}
-.bda-pharma-data-table {
-min-width: 100% !important;  /* स्क्रीन के डिब्बे में 100% फिट */
-table-layout: fixed !important; /* हर कॉलम का साइज बराबर बांटने के लिए */
-}
-.bda-pharma-data-table th, .bda-pharma-data-table td {
-white-space: normal !important; /* जरूरत पड़ने पर टेक्स्ट को आटोमेटिक नीचे रैप करे */
-word-wrap: break-word;
-}
-/* सटीक कॉलम चौड़ाई डिस्ट्रीब्यूशन */
-.bda-pharma-data-table th:nth-child(1), .bda-pharma-data-table td:nth-child(1) { width: 5%; }  /* Checkbox */
-.bda-pharma-data-table th:nth-child(2), .bda-pharma-data-table td:nth-child(2) { width: 20%; } /* Brand */
-.bda-pharma-data-table th:nth-child(3), .bda-pharma-data-table td:nth-child(3) { width: 23%; } /* Needle */
-.bda-pharma-data-table th:nth-child(4), .bda-pharma-data-table td:nth-child(4) { width: 22%; } /* Suture */
-.bda-pharma-data-table th:nth-child(5), .bda-pharma-data-table td:nth-child(5) { width: 15%; } /*Comp */
-.bda-pharma-data-table th:nth-child(6), .bda-pharma-data-table td:nth-child(6) { width: 15%; } /* MRP */
+    .bda-pharma-table-viewport {
+        overflow-x: hidden !important; /* लैंडस्केप में राइट-लेफ्ट स्क्रॉल पूरी तरह बंद */
+        width: 100% !important;
+    }
+    .bda-pharma-data-table {
+        width: 100% !important;
+        min-width: 100% !important;
+        table-layout: auto !important; /* ब्राउज़र डेटा के हिसाब से कॉलम साइज सेट करेगा */
+    }
+    .bda-pharma-data-table th, 
+    .bda-pharma-data-table td {
+        white-space: normal !important; /* बड़ी स्क्रीन पर जरूरत पड़ने पर टेक्स्ट नीचे रैप होगा */
+        word-wrap: break-word;
+        padding: 14px 12px !important; /* फालतू खाली स्पेस (Padding) को कम किया ताकि सब फिट हो सके */
+    }
 }
 
     </style>
