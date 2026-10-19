@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Matrix Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <style>
+      :root {
+    --bda-global-nav-color: #1a2238;
+    --text-header: #f9fbfd;
+    --text-footer: #f9fbfd;
+    --mob-drop-down-color: #212529;
+    --ramba-secion-color: #f9fbfd;
+    --bg-color: #f9fbfd;
+    --text-main: #ff4500;
+    --text-muted: #1a2238;
+    --border-color: #eeeeee;
+    --font-serif: "Playfair Display", Georgia, serif;
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    --container-max-width: 1200px;
+    --primary-color: #1a2238;
+    --accent-color: #ff4500;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --bg-light: #f9fbfd;
+    --white: #ffffff;
+    --error-red: #ef4444;
+    --success-green: #22c55e;
+    --bda-hamburger: #1a2238;
+    --bda-nav-container: #1a2238;
+    --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    /* List View Specific variables */
+    --pharma-purple: #6a1b9a;
+    --pharma-pink-text: #d81b60;
+    --pharma-bg-light: #fdfdfd;
+    --pharma-border-color: #e5e7eb;
+    --pharma-txt-main: #1f2937;
+    --pharma-txt-muted: #4b5563;
+    --pharma-font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: #f9fafb;
+    color: var(--pharma-txt-main);
+    line-height: 1.7;
+}
+
+/* --- Switcher Buttons --- */
+.bda-view-switcher {
+    max-width: 1360px;
+    margin: 1.5rem auto 0 auto;
+    padding: 0 1.5rem;
+}
+.bda-view-btn {
+    padding: 10px 20px;
+    border: 1px solid #cbd5e0;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+.bda-view-btn.active {
+    background: #00bfb3;
+    color: white;
+    border-color: #00bfb3;
+}
+
+.display-on { display: block !important; }
+.display-off { display: none !important; }
+
+/* ==========================================================================
+   GRID VIEW CSS MODULE
+   ========================================================================== */
+.bda-page-wrapper {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.bda-filter-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.bda-filters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.5fr;
+    gap: 2rem;
+    padding-bottom: 1.25rem;
+    align-items: start;
+}
+
+.bda-filter-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bda-input-search {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+.bda-input-search:focus {
+    border-color: #25d366;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.15);
+}
+
+.filter-label-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #2d3748;
+}
+
+.bda-checkbox-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.bda-category-list-scroll {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.bda-check-lbl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+.bda-action-panel {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid #edf2f7;
+    padding-top: 1.25rem;
+}
+
+.bda-btn-action {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+.btn-excel { background-color: #1f7246; }
+.btn-whatsapp { background-color: #25d366; }
+
+.bda-matrix-block-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.bda-product-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.bda-brand-title { font-size: 1.15rem; font-weight: 700; text-align: center; }
+.bda-card-body { font-size: 0.88rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.bda-detail-row { display: flex; flex-direction: column; }
+.bda-label { font-size: 0.75rem; font-weight: 700; color: #a0aec0; }
+.bda-value { color: #4a5568; font-weight: 500; }
+.bda-price { color: #2b6cb0; font-weight: 700; font-size: 1.1rem; }
+
+/* ==========================================================================
+   LIST VIEW CSS MODULE
+   ========================================================================== */
+.bda-pharma-header-banner {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--pharma-border-color);
+}
+
+.bda-export-action-bar {
+    max-width: 1310px;
+    margin: 20px auto 0 auto;
+    padding: 14px 24px;
+    background: #ffffff;
+    border: 1px solid var(--pharma-border-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.export-buttons-group { display: flex; gap: 12px; }
+.action-export-btn {
+    border: none; padding: 10px 20px; border-radius: 6px;
+    font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; color: white;
+}
+.action-export-btn.excel-theme { background-color: #107c41; }
+.action-export-btn.whatsapp-theme { background-color: #25d366; }
+.action-export-btn:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+
+.bda-pharma-dashboard-layout {
+    max-width: 1350px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 30px;
+}
+
+.bda-pharma-categories-sidebar {
+    background: #ffffff; border: 1px solid var(--pharma-border-color);
+    border-radius: 12px; padding: 24px 16px; height: max-content;
+}
+.categories-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.category-item a { display: block; padding: 10px 14px; font-size: 0.92rem; font-weight: 600; color: var(--pharma-txt-main); text-decoration: none; border-radius: 6px; }
+.category-item:hover a { background-color: #f3e5f5; color: var(--pharma-purple); }
+.category-item.active-cat a { color: var(--pharma-pink-text); background-color: rgba(216, 27, 96, 0.04); font-weight: 700; }
+
+.company-checkbox-wrapper { display: flex; flex-direction: column; gap: 12px; padding: 10px 6px; }
+.company-check-label { display: inline-flex; align-items: center; gap: 10px; font-size: 0.92rem; cursor: pointer; }
+
+.company-custom-box {
+    height: 18px; width: 18px; background-color: #ffffff;
+    border: 1px solid #cbd5e1; border-radius: 4px; display: inline-block;
+    position: relative;
+}
+.company-check-label input:checked ~ .company-custom-box {
+    background-color: var(--pharma-purple); border-color: var(--pharma-purple);
+}
+.company-custom-box::after {
+    content: ""; position: absolute; display: none;
+    left: 6px; top: 2px; width: 4px; height: 9px;
+    border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+.company-check-label input:checked ~ .company-custom-box::after { display: block; }
+.company-check-label input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.bda-pharma-main-content { display: flex; flex-direction: column; gap: 20px; }
+.bda-pharma-search-wrapper { position: relative; width: 100%; }
+.bda-pharma-search-wrapper input { width: 100%; padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 8px; }
+
+/* Desktop View Layout Engine Setup */
+.bda-pharma-table-viewport { 
+    width: 100%; 
+    background: #ffffff; 
+    border: 1px solid var(--pharma-border-color); 
+    border-radius: 12px; 
+    overflow: hidden; 
+}
+.bda-pharma-data-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    table-layout: auto; /* बड़ी स्क्रीन पर कॉलम्स को ऑटो-फिट करने के लिए */
+}
+.bda-pharma-data-table thead tr { background-color: var(--pharma-purple); color: white; }
+.bda-pharma-data-table th, .bda-pharma-data-table td { padding: 14px 16px; text-align: left; font-size: 0.9rem; }
+.bda-pharma-data-table tbody tr:nth-child(even) { background-color: #fdfdfd; }
+.bda-pharma-data-table tbody tr:nth-child(odd) { background-color: #f7f7f9; }
+.bda-pharma-data-table tbody tr:hover { background-color: #f3e5f5; }
+
+.row-view-details {
+    color: var(--pharma-purple); font-weight: 700; text-decoration: none;
+    border: 1px solid var(--pharma-purple); padding: 6px 12px; border-radius: 6px;
+    display: inline-block;
+}
+.row-view-details:hover { color: white; background-color: var(--pharma-pink-text); border-color: var(--pharma-pink-text); }
+
+/* --- Mobile Orientation Toast --- */
+.orientation-toast {
+    position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+    background: var(--bda-global-nav-color); color: white; padding: 15px 20px;
+    border-radius: 8px; z-index: 99999; width: 90%; max-width: 450px;
+    display: flex; flex-direction: column; transition: bottom 0.5s ease;
+}
+.orientation-toast.show { bottom: 30px; }
+
+/* ==========================================================================
+   🚨 FULL MOBILE & TABLET RESPONSIVE MEDIA QUERIES (FIXED BALANCED INTERFACE)
+   ========================================================================== */
+@media (max-width: 950px) {
+    /* --- Grid View Layout अलाइनमेंट फिक्स --- */
+    .bda-filters-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    /* 🟩 सर्च इनपुट को मोबाइल पर ऑर्डर-4 देकर सबसे नीचे व्हाट्सएप बटन के बाद भेजा */
+    .bda-filters-grid .bda-search-green-zone {
+        order: 4;
+        border-top: 1px dashed #edf2f7;
+        padding-top: 1rem;
+        width: 100%;
+    }
+    .bda-filters-grid .bda-filter-column:nth-child(1) { order: 1; }
+.bda-filters-grid .bda-filter-column:nth-child(2) { order: 2; }
+.bda-action-panel {
+flex-direction: row;
+flex-wrap: wrap;
+gap: 0.75rem;
+order: 3; /* बटन्स अब फिल्टर्स के ठीक नीचे आएंगे */
+border-top: none;
+padding-top: 0;
+}
+.bda-matrix-block-container {
+grid-template-columns: 1fr !important;
+}
+/* --- List View Layout अलाइनमेंट फिक्स --- */
+.bda-pharma-dashboard-layout {
+display: block !important;
+width: 100% !important;
+padding: 0 10px !important;
+}
+.categories-list {
+flex-direction: row !important;
+overflow-x: auto;
+white-space: nowrap;
+padding-bottom: 8px;
+}
+.company-checkbox-wrapper {
+flex-direction: row !important;
+overflow-x: auto;
+white-space: nowrap;
+gap: 16px;
+border-top: 1px solid var(--pharma-border-color);
+padding-top: 14px;
+}
+/* 🚨 मोबाइल वर्टिकल स्क्रीन पर हॉरिजॉन्टल स्वाइप एक्टिव रखने और श्रिंकिंग रोकने का फिक्स /
+.bda-pharma-table-viewport {
+overflow-x: auto !important;
+-webkit-overflow-scrolling: touch;
+display: block !important;
+}
+.bda-pharma-data-table {
+min-width: 850px !important; / मोबाइल पर चौड़ाई लॉक रहेगी */
+}
+.bda-pharma-data-table th, .bda-pharma-data-table td {
+white-space: nowrap !important;
+padding: 12px 14px !important;
+}
+.bda-export-action-bar {
+flex-direction: column;
+gap: 1rem;
+align-items: flex-start;
+}
+/* ==========================================================================
+🖥️ HORIZONTAL / LANDSCAPE MODE FIX (NO LEFT-RIGHT SCROLL)
+========================================================================== */
+@media (min-width: 951px) {
+.bda-pharma-table-viewport {
+overflow-x: hidden !important; /* बड़ी स्क्रीन पर स्क्रॉल बार को पूरी तरह छुपाएं */
+}
+.bda-pharma-data-table {
+min-width: 100% !important;  /* स्क्रीन के डिब्बे में 100% फिट */
+table-layout: fixed !important; /* हर कॉलम का साइज बराबर बांटने के लिए */
+}
+.bda-pharma-data-table th, .bda-pharma-data-table td {
+white-space: normal !important; /* जरूरत पड़ने पर टेक्स्ट को आटोमेटिक नीचे रैप करे */
+word-wrap: break-word;
+}
+/* सटीक कॉलम चौड़ाई डिस्ट्रीब्यूशन */
+.bda-pharma-data-table th:nth-child(1), .bda-pharma-data-table td:nth-child(1) { width: 5%; }  /* Checkbox */
+.bda-pharma-data-table th:nth-child(2), .bda-pharma-data-table td:nth-child(2) { width: 20%; } /* Brand */
+.bda-pharma-data-table th:nth-child(3), .bda-pharma-data-table td:nth-child(3) { width: 23%; } /* Needle */
+.bda-pharma-data-table th:nth-child(4), .bda-pharma-data-table td:nth-child(4) { width: 22%; } /* Suture */
+.bda-pharma-data-table th:nth-child(5), .bda-pharma-data-table td:nth-child(5) { width: 15%; } /*Comp */
+.bda-pharma-data-table th:nth-child(6), .bda-pharma-data-table td:nth-child(6) { width: 15%; } /* MRP */
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Layout Switcher Top Nav -->
+    <div class="bda-view-switcher">
+        <button id="btn-grid-view" class="bda-view-btn active">📊 Grid View</button>
+        <button id="btn-list-view" class="bda-view-btn">📝 List View</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. MODULE: MODULE GRID INVENTORY PANEL     -->
+    <!-- ========================================== -->
+    <div id="bda-grid-view-section" class="bda-view-block display-on">
+        <div class="bda-page-wrapper">
+            <div class="bda-filter-panel">
+                <div class="bda-filters-grid">
+                    <!-- Company Columns -->
+                    <div class="bda-filter-column">
+                        <span class="filter-label-text">🏢 कंपनी फ़िल्टर:</span>
+                        <div class="bda-checkbox-vertical">
+                            <label class="bda-check-lbl"><input type="checkbox" id="company-all" checked> All Companies</label>
+                            <label class="bda-check-lbl"><input type="checkbox" class="company-single" value="jnj"> J&J</label>
+                            <label class="bda-check-lbl"><input type="checkbox" class="company-single" value="healthium"> Healthium</label>
+                            <label class="bda-check-lbl"><input type="checkbox" class="company-single" value="meril"> Meril Life</label>
+                        </div>
+                    </div>
+                    <!-- Categories Columns -->
+                    <div class="bda-filter-column">
+                        <span class="filter-label-text">📂 कैटेगरी फ़िल्टर:</span>
+                        <div class="bda-checkbox-vertical bda-category-list-scroll">
+                            <label class="bda-check-lbl"><input type="checkbox" id="category-all" checked> All Categories</label>
+                            <label class="bda-check-lbl"><input type="checkbox" class="category-single" value="spout-pouches"> Spout Pouches</label>
+                            <label class="bda-check-lbl"><input type="checkbox" class="category-single" value="standup-zippers"> Standup Zippers</label>
+                        </div>
+                    </div>
+                    <!-- Search Inputs -->
+                    <div class="bda-filter-column bda-search-green-zone">
+                        <span class="filter-label-text">🔍 उत्पाद खोजें:</span>
+                        <input type="text" class="bda-input-search" placeholder="Live Search...">
+                    </div>
+                </div>
+
+                <div class="bda-action-panel">
+                    <button id="btn-download-excel" class="bda-btn-action btn-excel">📊 Save to Excel (PC)</button>
+                    <button id="btn-share-whatsapp" class="bda-btn-action btn-whatsapp">💬 Share via WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Product Grid Cards -->
+            <div class="bda-matrix-block-container">
+                <div class="bda-product-card" data-brand="Transparent Spout Pouch" data-company="jnj" data-category="spout-pouches">
+                    <h3 class="bda-brand-title">Transparent Spout Pouch</h3>
+                    <div class="bda-card-body">
+                        <div class="bda-detail-row"><span class="bda-label">CATEGORY:</span><span class="bda-value bda-cat-val">Spout Pouches</span></div>
+                        <div class="bda-detail-row"><span class="bda-label">NEEDLE'S PROFILE:</span><span class="bda-value bda-needle-val">3/8 Circle Reverse Cutting</span></div>
+                        <div class="bda-detail-row"><span class="bda-label">SUTURE'S PROFILE:</span><span class="bda-value bda-suture-val">Poliglecaprone 25</span></div>
+                        <div class="bda-price"><span class="bda-mrp-val">₹1,450</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. MODULE: MODULE HIGH-PRECISION LIST TABLE-->
+    <!-- ========================================== -->
+        <!-- ========================================== -->
+    <!-- 2. MODULE: MODULE HIGH-PRECISION LIST TABLE-->
+    <!-- ========================================== -->
+    <div id="bda-list-view-section" class="bda-view-block display-off">
+        <div class="bda-pharma-header-banner">
+            <h2>Product Categories Table View</h2>
+        </div>
+
+        <div class="bda-export-action-bar">
+            <div class="export-counter-txt">Selected Products: <span id="checkedRowsCount">0</span></div>
+            <div class="export-buttons-group">
+                <button id="exportExcelBtn" class="action-export-btn excel-theme" disabled>Save to PC (.XLSX)</button>
+                <button id="shareWhatsappBtn" class="action-export-btn whatsapp-theme" disabled>Share on WhatsApp</button>
+            </div>
+        </div>
+
+        <div class="bda-pharma-dashboard-layout">
+            <aside class="bda-pharma-categories-sidebar">
+                <h3 class="sidebar-title">Categories</h3>
+                <ul class="categories-list">
+                    <li class="category-item active-cat" data-category="all"><a href="#">Show All</a></li>
+                    <li class="category-item" data-category="Surgical Sutures"><a href="#">Surgical Sutures</a></li>
+                    <li class="category-item" data-category="Mesh & Matrix"><a href="#">Mesh &amp; Matrix</a></li>
+                </ul>
+
+                <h3 class="sidebar-title company-section-title">Filter by Company</h3>
+                <!-- 4 कंपनियों के प्रीमियम चेकबॉक्स यहाँ हैं -->
+                <div class="company-checkbox-wrapper">
+                    <label class="company-check-label">
+                        <input type="checkbox" class="company-filter-checkbox" value="jnj" checked>
+                        <span class="company-custom-box"></span> J&amp;J (Ethicon)
+                    </label>
+                    <label class="company-check-label">
+                        <input type="checkbox" class="company-filter-checkbox" value="healthium" checked>
+                        <span class="company-custom-box"></span> Healthium
+                    </label>
+                    <label class="company-check-label">
+                        <input type="checkbox" class="company-filter-checkbox" value="meril" checked>
+                        <span class="company-custom-box"></span> Meril Life
+                    </label>
+                    <label class="company-check-label">
+                        <input type="checkbox" class="company-filter-checkbox" value="covidien" checked>
+                        <span class="company-custom-box"></span> Covidien
+                    </label>
+                </div>
+            </aside>
+
+            <main class="bda-pharma-main-content">
+                <div class="bda-pharma-search-wrapper">
+                    <input type="text" id="pharmaLiveSearchInput" placeholder="Search by Brand, Needle, Profile...">
+                </div>
+
+                <div class="bda-pharma-table-viewport">
+                    <table class="bda-pharma-data-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllPharmaRows"></th>
+                                <th>BRAND</th>
+                                <th>NEEDLE'S PROFILE</th>
+                                <th>SUTURE'S PROFILE</th>
+                                <th>COMPOSITION</th>
+                                <th>MRP/(12PCS)</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <!-- 10 रियल सर्जिकल प्रोडक्ट्स का डेटा -->
+                        <tbody id="pharmaTableBodyRows">
+                            <tr data-prod-cat="Surgical Sutures" data-company="jnj">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">MONOCRYL Ultra</td>
+                                <td>3/8 Circle Rev Cutting</td>
+                                <td>Poliglecaprone 25 Unbraided</td>
+                                <td class="composition-text-primary">Suture Monofilament</td>
+                                <td>₹1,450</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="jnj">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">VICRYL Plus</td>
+                                <td>1/2 Circle Taper Point</td>
+                                <td>Polyglactin 910 Braided</td>
+                                <td class="composition-text-primary">Antibacterial Coated</td>
+                                <td>₹2,100</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="healthium">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">TRUGLYDE Fast</td>
+                                <td>3/8 Circle Round Body</td>
+                                <td>Polyglycolic Acid Braided</td>
+                                <td class="composition-text-primary">Absorbable Synthetic</td>
+                                <td>₹980</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="healthium">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">TRULENE</td>
+                                <td>3/8 Circle Reverse Cutting</td>
+                                <td>Polypropylene Monofilament</td>
+                                <td class="composition-text-primary">Non-Absorbable Blue</td>
+                                <td>₹1,150</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="meril">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">MITSU Absorbable</td>
+                                <td>1/2 Circle Reverse Cutting</td>
+                                <td>Polyglactin 910 Braided</td>
+                                <td class="composition-text-primary">Mid-Term Absorbable</td>
+                                <td>₹1,250</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Mesh & Matrix" data-company="meril">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">MERILENE Mesh</td>
+                                <td>No Needle (Hernia Mesh)</td>
+                                <td>Polypropylene Mesh Structure</td>
+                                <td class="composition-text-primary">Non-Absorbable Grid</td>
+                                <td>₹3,400</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="covidien">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">SURGIPRO II</td>
+                                <td>3/8 Circle Taper Point</td>
+                                <td>Polypropylene Monofilament</td>
+                                <td class="composition-text-primary">Cardiovascular Clear</td>
+                                <td>₹2,850</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="covidien">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">MAXON Absorbable</td>
+                                <td>1/2 Circle Taper Point</td>
+                                <td>Polyglyconate Monofilament</td>
+                                <td class="composition-text-primary">Long-Term Absorbable</td>
+                                <td>₹1,950</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Surgical Sutures" data-company="jnj">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">PROLENE Blue</td>
+                                <td>3/8 Circle Reverse Cutting</td>
+                                <td>Polypropylene Monofilament</td>
+                                <td class="composition-text-primary">Non-Absorbable Suture</td>
+                                <td>₹1,680</td>
+                                <td><a href="#" class="row-view-details">View More</a></td>
+                            </tr>
+                            <tr data-prod-cat="Mesh & Matrix" data-company="healthium">
+                                <td><input type="checkbox" class="row-select-input"></td>
+                                <td class="brand-name-bold">TRUMESH Grid</td>
+                                <td>No Needle (Standard)</td>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    // ----------------------------------------------------
+    // 1. GRID / LIST VIEW TOGGLE SYSTEM
+    // ----------------------------------------------------
+    const btnList = document.getElementById("btn-list-view");
+    const btnGrid = document.getElementById("btn-grid-view");
+    const listSection = document.getElementById("bda-list-view-section");
+    const gridSection = document.getElementById("bda-grid-view-section");
+    const alertToast = document.getElementById("orientationAlert");
+    const closeBtn = document.getElementById("closeToastBtn");
+
+    if (btnList && btnGrid) {
+        btnList.addEventListener("click", function () {
+            btnList.classList.add("active");
+            btnGrid.classList.remove("active");
+            if (listSection && gridSection) {
+                listSection.classList.replace("display-off", "display-on");
+                gridSection.classList.replace("display-on", "display-off");
+            }
+        });
+
+        btnGrid.addEventListener("click", function () {
+            btnGrid.classList.add("active");
+            btnList.classList.remove("active");
+            if (gridSection && listSection) {
+                gridSection.classList.replace("display-off", "display-on");
+                listSection.classList.replace("display-on", "display-off");
+            }
+
+            const isMobileScreen = window.innerWidth <= 768;
+            const isMobileDevice = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+            
+            if ((isMobileScreen || isMobileDevice) && alertToast) {
+                alertToast.style.display = "flex";
+                setTimeout(() => alertToast.classList.add("show"), 50);
+                const autoTimeout = setTimeout(closeToast, 10500);
+
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", () => {
+                        clearTimeout(autoTimeout);
+                        closeToast();
+                    });
+                }
+            }
+        });
+    }
+
+    function closeToast() {
+        if (alertToast) {
+            alertToast.classList.remove("show");
+            setTimeout(() => { alertToast.style.display = "none"; }, 500);
+        }
+    }
+
+    // ----------------------------------------------------
+    // 2. GRID CONTROLLER SYSTEM (Filters & Live Search)
+    // ----------------------------------------------------
+    const gridSearch = document.querySelector(".bda-input-search");
+    const companyAll = document.getElementById("company-all");
+    const singleCompanies = document.querySelectorAll(".company-single");
+    const categoryAll = document.getElementById("category-all");
+    const singleCategories = document.querySelectorAll(".category-single");
+    const productCards = document.querySelectorAll(".bda-product-card");
+
+    function filterGridProducts() {
+        const text = gridSearch ? gridSearch.value.toLowerCase().trim() : "";
+        const isAllComp = companyAll ? companyAll.checked : true;
+        const activeComps = Array.from(singleCompanies).filter(cb => cb.checked).map(cb => cb.value);
+        const isAllCat = categoryAll ? categoryAll.checked : true;
+        const activeCats = Array.from(singleCategories).filter(cb => cb.checked).map(cb => cb.value);
+
+        productCards.forEach(card => {
+            const brand = (card.getAttribute("data-brand") || "").toLowerCase();
+            const comp = card.getAttribute("data-company") || "";
+            const cat = card.getAttribute("data-category") || "";
+
+            const matchSearch = brand.includes(text);
+            const matchComp = isAllComp || activeComps.includes(comp);
+            const matchCat = isAllCat || activeCats.includes(cat);
+
+            card.style.display = (matchSearch && matchComp && matchCat) ? "flex" : "none";
+        });
+    }
+
+    if (companyAll) {
+        companyAll.addEventListener("change", function() {
+            if (this.checked) singleCompanies.forEach(cb => cb.checked = false);
+            filterGridProducts();
+        });
+        singleCompanies.forEach(cb => cb.addEventListener("change", function() {
+            if (this.checked) companyAll.checked = false;
+            if (!Array.from(singleCompanies).some(c => c.checked)) companyAll.checked = true;
+            filterGridProducts();
+        }));
+    }
+
+    if (categoryAll) {
+        categoryAll.addEventListener("change", function() {
+            if (this.checked) singleCategories.forEach(cb => cb.checked = false);
+            filterGridProducts();
+        });
+        singleCategories.forEach(cb => cb.addEventListener("change", function() {
+            if (this.checked) categoryAll.checked = false;
+            if (!Array.from(singleCategories).some(c => c.checked)) categoryAll.checked = true;
+            filterGridProducts();
+        }));
+    }
+    
+    if (gridSearch) {
+        gridSearch.addEventListener("input", filterGridProducts);
+    }
+
+    // ----------------------------------------------------
+    // 3. LIST CONTROLLER SYSTEM (Table Matrix Setup)
+    // ----------------------------------------------------
+    const listSearch = document.getElementById("pharmaLiveSearchInput");
+    const tableBody = document.getElementById("pharmaTableBodyRows");
+    const noResultsMsg = document.getElementById("noPharmaResultsMessage");
+    const selectAllCheckbox = document.getElementById("selectAllPharmaRows");
+    const exportExcelBtn = document.getElementById("exportExcelBtn");
+    const shareWhatsappBtn = document.getElementById("shareWhatsappBtn");
+    const checkedRowsCount = document.getElementById("checkedRowsCount");
+    const categoryItems = document.querySelectorAll(".category-item");
+    const companyCheckboxes = document.querySelectorAll(".company-filter-checkbox");
+
+    function getTableRowData(row) {
+        if (!row || !row.cells || row.cells.length < 6) {
+            return { brand: "", needle: "", suture: "", comp: "", mrp: "" };
+        }
+        return {
+            brand: row.cells[1] ? row.cells[1].innerText.trim() : "",
+            needle: row.cells[2] ? row.cells[2].innerText.trim() : "",
+            suture: row.cells[3] ? row.cells[3].innerText.trim() : "",
+            comp: row.cells[4] ? row.cells[4].innerText.trim() : "",
+            mrp: row.cells[5] ? row.cells[5].innerText.trim() : ""
+        };
+    }
+
+    function filterListInventory() {
+        if (!tableBody) return;
+        const rows = tableBody.getElementsByTagName("tr");
+        const text = listSearch ? listSearch.value.toLowerCase().trim() : "";
+        const activeCatItem = document.querySelector(".category-item.active-cat");
+        const activeCat = activeCatItem ? activeCatItem.getAttribute("data-category") : "all";
+        const selectedComps = Array.from(companyCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+
+        let matchCount = 0;
+
+        Array.from(rows).forEach(row => {
+            const rowCat = row.getAttribute("data-prod-cat") || "";
+            const rowComp = row.getAttribute("data-company") || "";
+            const data = getTableRowData(row);
+
+            const matchCat = (activeCat === "all" || rowCat === activeCat);
+            const matchComp = selectedComps.length === 0 || selectedComps.includes(rowComp);
+            const rowFullText = `${data.brand} ${data.needle} ${data.suture} ${data.comp}`.toLowerCase();
+            const matchSearch = rowFullText.includes(text);
+
+            if (matchCat && matchComp && matchSearch) {
+                row.style.display = "";
+                matchCount++;
+            } else {
+                row.style.display = "none";
+                const cb = row.querySelector(".row-select-input");
+                if (cb) { cb.checked = false; row.classList.remove("row-is-selected"); }
+            }
+        });
+
+        if (noResultsMsg) noResultsMsg.style.display = (matchCount === 0) ? "block" : "none";
+        syncActionControls();
+    }
+
+    function syncActionControls() {
+        if (!tableBody) return;
+        const checkedInputs = tableBody.querySelectorAll(".row-select-input:checked");
+        const visibleInputs = tableBody.querySelectorAll("tr:not([style*='display: none']) .row-select-input");
+        const visibleChecked = tableBody.querySelectorAll("tr:not([style*='display: none']) .row-select-input:checked");
+
+        if (checkedRowsCount) checkedRowsCount.innerText = checkedInputs.length;
+        const isDisabled = checkedInputs.length === 0;
+
+        if (exportExcelBtn) exportExcelBtn.disabled = isDisabled;
+        if (shareWhatsappBtn) shareWhatsappBtn.disabled = isDisabled;
+        if (selectAllCheckbox) selectAllCheckbox.checked = (visibleInputs.length === visibleChecked.length && visibleInputs.length > 0);
+    }
+
+    if (tableBody) {
+        tableBody.addEventListener("change", function (e) {
+            if (e.target && e.target.classList.contains("row-select-input")) {
+                const tr = e.target.closest("tr");
+                if (tr) {
+                    if (e.target.checked) tr.classList.add("row-is-selected");
+                    else tr.classList.remove("row-is-selected");
+                }
+                syncActionControls();
+            }
+        });
+
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener("change", function() {
+                const isChecked = this.checked;
+                Array.from(tableBody.getElementsByTagName("tr")).forEach(row => {
+                    if (row.style.display !== "none") {
+                        const cb = row.querySelector(".row-select-input");
+                        if (cb) {
+                            cb.checked = isChecked;
+                            if (isChecked) row.classList.add("row-is-selected");
+else row.classList.remove("row-is-selected");
+}
+}
+});
+syncActionControls();
+});
+}
+companyCheckboxes.forEach(cb => cb.addEventListener("change", filterListInventory));
+if (listSearch) listSearch.addEventListener("input", filterListInventory);
+categoryItems.forEach(item => {
+item.addEventListener("click", function(e) {
+e.preventDefault();
+categoryItems.forEach(cat => cat.classList.remove("active-cat"));
+this.classList.add("active-cat");
+filterListInventory();
+});
+});
+if (shareWhatsappBtn) {
+shareWhatsappBtn.addEventListener("click", function () {
+const checkedBoxes = tableBody.querySelectorAll(".row-select-input:checked");
+let msg = "BDA GLOBAL MATRIX - SURGICAL PROFILES\n";
+msg += "========================================\n\n";
+let idx = 1;
+checkedBoxes.forEach(function (cb) {
+const tr = cb.closest("tr");
+if (tr) {
+const d = getTableRowData(tr);
+msg += idx + ". " + d.brand + "\n";
+msg += "   • Needle: " + d.needle + "\n";
+msg += "   • Suture: " + d.suture + "\n";
+msg += "   • MRP: " + d.mrp + "\n\n";
+idx++;
+}
+});
+const finalUrl = "whatsapp.com" + encodeURIComponent(msg);
+window.open(finalUrl, "_blank");
+});
+}
+}
+});
+    </script>
+</body>
+</html>
