@@ -343,7 +343,7 @@ body {
 
     /* --- List View Responsive Swipe Engine --- */
     .bda-pharma-dashboard-layout {
-        display: block !important;
+        display: block !important; /* 👈 ग्रिड हटाकर ब्लॉक किया ताकि साइडबार ऊपर और टेबल नीचे आ सके */
         width: 100% !important;
         padding: 0 10px !important;
     }
@@ -360,9 +360,10 @@ body {
         gap: 16px;
         border-top: 1px solid var(--pharma-border-color);
         padding-top: 14px;
+        margin-top: 10px;
     }
     
-    /* 📱 मोबाइल वर्टिकल स्क्रीन: लॉकिंग हटाकर वापस स्वाइप चालू किया */
+    /* 📱 मोबाइल वर्टिकल स्क्रीन (जब फोन सीधा खड़ा हो) */
     .bda-pharma-table-viewport {
         overflow-x: auto !important;
         display: block !important;
@@ -371,12 +372,12 @@ body {
     }
     .bda-pharma-data-table {
         width: auto !important;
-        min-width: 850px !important; /* मोबाइल पर टेबल को सिकुड़ने से रोकेगा */
-        table-layout: auto !important; /* फिक्स्ड लॉक हटाया */
+        min-width: 850px !important; 
+        table-layout: auto !important; 
     }
     .bda-pharma-data-table th, 
     .bda-pharma-data-table td {
-        white-space: nowrap !important; /* टेक्स्ट एक लाइन में रहेगा */
+        white-space: nowrap !important; 
         padding: 12px 16px !important;
     }
     .bda-export-action-bar {
@@ -387,25 +388,35 @@ body {
 }
 
 /* ==========================================================================
-   🖥️ HORIZONTAL / LANDSCAPE MODE FIX (AUTO-FIT FOR ALL 6 COLUMNS)
+   📱 🖥️ MOBILE HORIZONTAL (LANDSCAPE) & DESKTOP AUTO-FIT ENGINE
    ========================================================================== */
-@media (min-width: 951px) {
+/* जब मोबाइल आड़ा (Landscape) हो या बड़ी स्क्रीन हो, तब पूरे 6 कॉलम्स बिना स्क्रॉल के फिट होंगे */
+@media (min-width: 550px) and (max-width: 950px) and (orientation: landscape), (min-width: 951px) {
+    .bda-pharma-dashboard-layout {
+        display: block !important; /* साइडबार को ऊपर और टेबल को पूरा रास्ता देने के लिए */
+    }
+    .bda-pharma-categories-sidebar {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+    }
     .bda-pharma-table-viewport {
-        overflow-x: hidden !important; /* लैंडस्केप में राइट-लेफ्ट स्क्रॉल पूरी तरह बंद */
+        overflow-x: hidden !important; /* राइट-लेफ्ट स्क्रॉल बार को पूरी तरह गायब किया */
         width: 100% !important;
     }
     .bda-pharma-data-table {
         width: 100% !important;
         min-width: 100% !important;
-        table-layout: auto !important; /* ब्राउज़र डेटा के हिसाब से कॉलम साइज सेट करेगा */
+        table-layout: auto !important; /* डेटा के हिसाब से कॉलम खुद को ढालेंगे */
     }
     .bda-pharma-data-table th, 
     .bda-pharma-data-table td {
-        white-space: normal !important; /* बड़ी स्क्रीन पर जरूरत पड़ने पर टेक्स्ट नीचे रैप होगा */
+        white-space: normal !important; /* टेक्स्ट लंबा होने पर टूटने के बजाय नीचे की लाइन में आ जाएगा */
         word-wrap: break-word;
-        padding: 14px 12px !important; /* फालतू खाली स्पेस (Padding) को कम किया ताकि सब फिट हो सके */
+        padding: 10px 8px !important; /* खाली गैप कम किया ताकि डेटा स्क्रीन के अंदर सिमट सके */
+        font-size: 0.85rem !important; /* टेक्स्ट साइज हल्का सा छोटा किया ताकि मोबाइल चौड़ाई में आ जाए */
     }
 }
+
 
     </style>
 </head>
